@@ -5,6 +5,10 @@ const notFound = (req, res, next) => {
 }
 
 const errorHandler = (err, req, res, next) => {
+  if (res.headersSent) {
+    // If headers have already been sent, pass the error to the next middleware
+    return next(err)
+  }
   let statusCode = res.statusCode === 200 ? 500 : res.statusCode
   let message = err.message
 
