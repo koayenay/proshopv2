@@ -104,6 +104,11 @@ const OrderScreen = () => {
       })
   }
 
+  const deliverOrderHandler = async () => {
+    await deliverOrder(orderId)
+    refetch()
+  }
+
   return isLoading ? (
     <Loader />
   ) : error ? (
@@ -243,6 +248,21 @@ const OrderScreen = () => {
                   )}
                 </ListGroupItem>
               )}
+              {loadingDeliver && <Loader />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type='button'
+                      className='btn btn-block'
+                      onClick={deliverOrderHandler}
+                    >
+                      Mark as Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
