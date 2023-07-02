@@ -1,4 +1,3 @@
-import React from "react"
 import { LinkContainer } from "react-router-bootstrap"
 import { Table, Button, Row, Col } from "react-bootstrap"
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa"
@@ -8,20 +7,39 @@ import Loader from "../../components/Loader"
 // import Paginate from "../../components/Paginate"
 import {
   useGetProductsQuery,
-  useDeleteProductMutation,
+  // useDeleteProductMutation,
   useCreateProductMutation,
 } from "../../slices/productsApiSlice"
 import { toast } from "react-toastify"
 
 const ProductListScreen = () => {
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery()
+  const { pageNumber } = useParams()
+
+  const {
+    data: products,
+    isLoading,
+    error,
+    refetch,
+  } = useGetProductsQuery({
+    pageNumber,
+  })
+
+  // const [deleteProduct, { isLoading: loadingDelete }] =
+  //   useDeleteProductMutation()
+
+  // const deleteHandler = async (id) => {
+  //   if (window.confirm("Are you sure")) {
+  //     try {
+  //       await deleteProduct(id)
+  //       refetch()
+  //     } catch (err) {
+  //       toast.error(err?.data?.message || err.error)
+  //     }
+  //   }
+  // }
 
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation()
-
-  const deleteHandler = async (id) => {
-    console.log("delete", id)
-  }
 
   const createProductHandler = async () => {
     if (window.confirm("Are you sure you want to create a new product?")) {
@@ -41,12 +59,14 @@ const ProductListScreen = () => {
           <h1>Products</h1>
         </Col>
         <Col className='text-end'>
-          <Button className='btn-sm m-3' onClick={createProductHandler}>
-            <FaEdit /> Create Product
+          <Button className='my-3' onClick={createProductHandler}>
+            <FaPlus /> Create Product
           </Button>
         </Col>
       </Row>
+
       {loadingCreate && <Loader />}
+      {/* {loadingDelete && <Loader />} */}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -78,18 +98,19 @@ const ProductListScreen = () => {
                         <FaEdit />
                       </Button>
                     </LinkContainer>
-                    <Button
+                    {/* <Button
                       variant='danger'
                       className='btn-sm'
                       onClick={() => deleteHandler(product._id)}
                     >
                       <FaTrash style={{ color: "white" }} />
-                    </Button>
+                    </Button> */}
                   </td>
                 </tr>
               ))}
             </tbody>
           </Table>
+          {/* <Paginate pages={data.pages} page={data.page} isAdmin={true} /> */}
         </>
       )}
     </>
