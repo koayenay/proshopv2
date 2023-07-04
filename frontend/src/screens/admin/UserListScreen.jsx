@@ -7,7 +7,7 @@ import Loader from "../../components/Loader"
 import {
   useDeleteUserMutation,
   useGetUsersQuery,
-} from "../../slices/usersApiSlice"
+} from "../../slices/userApiSlice"
 import { toast } from "react-toastify"
 
 const UserListScreen = () => {
