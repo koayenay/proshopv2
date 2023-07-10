@@ -18,8 +18,11 @@ const HomeScreen = () => {
   //   }
   //   fetchProducts()
   // }, [])
-  const { pageNumber } = useParams()
-  const { data, isLoading, error } = useGetProductsQuery({ pageNumber })
+  const { pageNumber, keyword } = useParams()
+  const { data, isLoading, error } = useGetProductsQuery({
+    keyword,
+    pageNumber,
+  })
 
   return (
     <>
@@ -39,7 +42,11 @@ const HomeScreen = () => {
               </Col>
             ))}
           </Row>
-          <Paginate pages={data.pages} page={data.page} />
+          <Paginate
+            pages={data.pages}
+            page={data.page}
+            keyword={keyword ? keyword : ""}
+          />
         </>
       )}
     </>
