@@ -11,15 +11,6 @@ import { Link } from "react-router-dom"
 import ProductCarousel from "../components/ProductCarousel"
 
 const HomeScreen = () => {
-  // const [products, setProducts] = useState([])
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     const { data } = await axios.get("/api/products")
-  //     setProducts(data)
-  //   }
-  //   fetchProducts()
-  // }, [])
   const { pageNumber, keyword } = useParams()
   const { data, isLoading, error } = useGetProductsQuery({
     keyword,
